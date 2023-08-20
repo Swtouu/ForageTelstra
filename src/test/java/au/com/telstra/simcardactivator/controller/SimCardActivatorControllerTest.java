@@ -3,6 +3,7 @@ package au.com.telstra.simcardactivator.controller;
 import au.com.telstra.simcardactivator.app.controller.SimCardActivatorController;
 import au.com.telstra.simcardactivator.app.dto.SimCardActivateRequest;
 import au.com.telstra.simcardactivator.app.dto.SimCardActivateResponse;
+import au.com.telstra.simcardactivator.app.model.SimCardModel;
 import au.com.telstra.simcardactivator.app.service.SimCardService;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,21 +44,35 @@ public class SimCardActivatorControllerTest {
     @Test
     public void SimCardActivateSuccess() {
         when(this.simCardService.simCardActivate(any())).thenReturn(SimCardActivateResponse.builder().success(true).build());
-        ResponseEntity<SimCardActivateResponse> result = this.simCardActivatorController.SimCardActivate(this.simCardActivateRequest);
+        ResponseEntity<SimCardActivateResponse> result = this.simCardActivatorController.simCardActivate(this.simCardActivateRequest);
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
     }
 
     @Test
     public void SimCardActivateFail() {
         when(this.simCardService.simCardActivate(any())).thenReturn(SimCardActivateResponse.builder().success(false).build());
-        ResponseEntity<SimCardActivateResponse> result = this.simCardActivatorController.SimCardActivate(this.simCardActivateRequest);
+        ResponseEntity<SimCardActivateResponse> result = this.simCardActivatorController.simCardActivate(this.simCardActivateRequest);
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
     }
 
     @Test
     public void SimCardActivateNull() {
         when(this.simCardService.simCardActivate(any())).thenReturn(null);
-        ResponseEntity<SimCardActivateResponse> result = this.simCardActivatorController.SimCardActivate(this.simCardActivateRequest);
+        ResponseEntity<SimCardActivateResponse> result = this.simCardActivatorController.simCardActivate(this.simCardActivateRequest);
+        assertThat(result.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    @Test
+    public void SimCardInquirySuccess() {
+        when(this.simCardService.simCardInquiry(any())).thenReturn(SimCardModel.builder().build());
+        ResponseEntity<SimCardModel> result = this.simCardActivatorController.simCardInquiry(any());
+        assertThat(result.getStatusCode(), is(HttpStatus.OK));
+    }
+
+    @Test
+    public void SimCardInquiryFail() {
+        when(this.simCardService.simCardInquiry(any())).thenReturn(null);
+        ResponseEntity<SimCardModel> result = this.simCardActivatorController.simCardInquiry(any());
         assertThat(result.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 }

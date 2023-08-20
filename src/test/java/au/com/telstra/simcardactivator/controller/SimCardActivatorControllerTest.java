@@ -42,35 +42,35 @@ public class SimCardActivatorControllerTest {
     }
 
     @Test
-    public void SimCardActivateSuccess() {
+    public void sim_card_activate_success() {
         when(this.simCardService.simCardActivate(any())).thenReturn(SimCardActivateResponse.builder().success(true).build());
         ResponseEntity<SimCardActivateResponse> result = this.simCardActivatorController.simCardActivate(this.simCardActivateRequest);
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
     }
 
     @Test
-    public void SimCardActivateFail() {
+    public void sim_card_activate_fail() {
         when(this.simCardService.simCardActivate(any())).thenReturn(SimCardActivateResponse.builder().success(false).build());
         ResponseEntity<SimCardActivateResponse> result = this.simCardActivatorController.simCardActivate(this.simCardActivateRequest);
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
     }
 
     @Test
-    public void SimCardActivateNull() {
+    public void sim_card_activate_null() {
         when(this.simCardService.simCardActivate(any())).thenReturn(null);
         ResponseEntity<SimCardActivateResponse> result = this.simCardActivatorController.simCardActivate(this.simCardActivateRequest);
         assertThat(result.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     @Test
-    public void SimCardInquirySuccess() {
+    public void sim_card_inquiry_success() {
         when(this.simCardService.simCardInquiry(any())).thenReturn(SimCardModel.builder().build());
         ResponseEntity<SimCardModel> result = this.simCardActivatorController.simCardInquiry(any());
         assertThat(result.getStatusCode(), is(HttpStatus.OK));
     }
 
     @Test
-    public void SimCardInquiryFail() {
+    public void sim_card_inquiry_fail() {
         when(this.simCardService.simCardInquiry(any())).thenReturn(null);
         ResponseEntity<SimCardModel> result = this.simCardActivatorController.simCardInquiry(any());
         assertThat(result.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
